@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XO PS Lounge | اكس او بي اس لاونج - عالم البلايستيشن والهدوء</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        coffee: {
+                            dark: '#241813',
+                            surface: '#2C1D17',
+                            card: '#35231C',
+                            border: '#523A2E',
+                            accent: '#C69255',
+                            light: '#E0A96D',
+                            cream: '#FAF6F0',
+                            muted: '#C5B5A5'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Custom CSS (Primary Root & Assets Fallback) -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-[#241813] text-[#FAF6F0] min-h-screen relative font-sans selection:bg-[#C69255] selection:text-[#241813]">
+
+    <!-- ========================================================================= -->
+    <!-- FLOATING SIDE BOOKING WIDGET (أيقونة جانبية زي نظام حجز) -->
+    <!-- ========================================================================= -->
+    <aside class="floating-side-widget">
+        <button onclick="openBookingModal(1)" class="floating-side-btn group" title="حجز روم سريع">
+            <div class="side-icon">
+                <i class="fa-solid fa-gamepad"></i>
+            </div>
+            <span class="side-label">حجز سريع</span>
+        </button>
+    </aside>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container"></div>
+
+    <!-- Background Ambient Glows & Subtle Retro PS Shapes -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0 opacity-20">
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-[#C69255]/20 rounded-full blur-[128px]"></div>
+        <div class="absolute top-1/2 -left-40 w-96 h-96 bg-[#3D5A80]/18 rounded-full blur-[128px]"></div>
+        <div class="absolute -bottom-40 right-1/3 w-96 h-96 bg-[#5A3929]/20 rounded-full blur-[128px]"></div>
+        
+        <!-- PlayStation Symbol Watermarks in Muted Warm Tones -->
+        <i class="fa-solid fa-xmark ps-shape text-8xl top-20 left-10 text-[#C69255]/25 rotate-12"></i>
+        <i class="fa-regular fa-circle ps-shape text-9xl top-1/3 right-12 text-[#E0A96D]/25"></i>
+        <i class="fa-solid fa-play ps-shape text-8xl bottom-1/4 left-16 text-[#3D5A80]/25 -rotate-90"></i>
+        <i class="fa-regular fa-square ps-shape text-9xl bottom-10 right-20 text-[#A8733D]/25 rotate-45"></i>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- DEMO ANNOUNCEMENT BAR (بشمهندس ياسين & فرقة 7pstudio) -->
+    <!-- ========================================================================= -->
+    <div id="demo-announcement-banner" class="relative z-50 bg-[#1A110D] border-b border-[#C69255]/40 py-2.5 px-4 text-xs shadow-lg">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-right">
+            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2.5 text-[#EFE6DC]">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-[#C69255] to-[#E0A96D] text-[#140E0C] font-black text-[11px] shadow-sm">
+                    <i class="fa-solid fa-laptop-code text-xs"></i> ديمو تجريبي • DEMO
+                </span>
+                <span class="text-xs sm:text-[13px] font-medium text-[#FAF6F0]">
+                    هذا الموقع هو <strong class="text-[#E0A96D]">نسخة ديمو تجريبية</strong> من عمل <strong class="text-[#FAF6F0] underline decoration-[#C69255]/60 underline-offset-4 font-bold">بشمهندس ياسين</strong> وفرقة
+                    <a href="https://7pstudio.tech" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-[#38261E] hover:bg-[#C69255] text-[#E0A96D] hover:text-[#140E0C] border border-[#C69255]/50 hover:border-[#E0A96D] font-black transition-all group">
+                        <span>7pstudio</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+                    </a>
+                </span>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <a href="https://7pstudio.tech" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-[#E0A96D] hover:text-[#FAF6F0] bg-[#2C1D17] hover:bg-[#38261E] px-3 py-1 rounded-xl border border-[#C69255]/30 transition-all font-mono">
+                    <i class="fa-solid fa-globe text-[#C69255]"></i>
+                    <span class="font-bold">7pstudio.tech</span>
+                </a>
+                <button onclick="document.getElementById('demo-announcement-banner').style.display='none'" class="text-[#C5B5A5] hover:text-[#FAF6F0] p-1 text-xs hover:bg-[#38261E] rounded-lg transition-all" title="إخفاء الشريط">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-[#C69255]/20 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#5A3929] via-[#C69255] to-[#E0A96D] p-0.5 shadow-lg group-hover:scale-105 transition-all">
+                    <div class="w-full h-full bg-[#241813] rounded-[14px] flex items-center justify-center">
+                        <span class="text-xl font-black tracking-tighter text-[#E0A96D]">XO</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xl font-black text-[#FAF6F0] tracking-wider">XO PS</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#38261E] text-[#E0A96D] border border-[#C69255]/30">LOUNGE</span>
+                    </div>
+                    <span class="text-[11px] text-[#C5B5A5] block -mt-0.5">اكس او بي اس • كافيه وبلايستيشن هادئ</span>
+                </div>
+            </a>
+
+            <!-- Desktop Links -->
+            <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-[#EFE6DC]">
+                <a href="#rooms-section" class="hover:text-[#E0A96D] transition-colors flex items-center gap-1.5">
+                    <i class="fa-brands fa-playstation text-xs text-[#C69255]"></i> الغرف (15 روم)
+                </a>
+                <a href="#gallery-section" class="hover:text-[#E0A96D] transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-camera-retro text-xs text-[#E0A96D]"></i> صور اللاونج
+                </a>
+                <a href="#games-section" class="hover:text-[#E0A96D] transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-gamepad text-xs text-[#51759E]"></i> مكتبة الألعاب
+                </a>
+                <a href="#the-rest-section" class="hover:text-[#E0A96D] transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-mug-hot text-xs text-[#C69255]"></i> كافيه الريست
+                </a>
+                <a href="#about-section" class="hover:text-[#E0A96D] transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-circle-check text-xs text-[#E0A96D]"></i> بساطة المكان
+                </a>
+            </nav>
+
+            <!-- Right Actions: Vouchers + Sound + Cart + User Pill + Book Button -->
+            <div class="flex items-center gap-2.5">
+                <!-- Vouchers Header Pill (خانة الفاوتشرز في الهيدر) -->
+                <button onclick="openVouchersModal()" class="relative flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#35231C] border border-[#C69255]/30 hover:border-[#E0A96D] text-xs font-bold text-[#E0A96D] transition-all" title="أكواد الخصم والفاوتشرز">
+                    <i class="fa-solid fa-ticket-simple text-sm"></i>
+                    <span class="hidden sm:inline">الفاوتشرز</span>
+                    <span id="vouchers-count-badge" class="px-1.5 py-0.2 rounded-full bg-[#C69255] text-[#1A110D] text-[10px] font-black">3</span>
+                </button>
+
+                <!-- Sound Toggle -->
+                <button id="sound-toggle-btn" class="w-9 h-9 rounded-xl bg-[#35231C] border border-[#C69255]/20 hover:border-[#C69255]/50 flex items-center justify-center text-sm transition-all" title="كتم / تفعيل الصوت">
+                    <i class="fa-solid fa-volume-high text-[#E0A96D]"></i>
+                </button>
+
+                <!-- In-Room Cart Floating Trigger -->
+                <button onclick="openCartModal()" class="relative w-9 h-9 rounded-xl bg-[#35231C] border border-[#C69255]/20 hover:border-[#E0A96D] flex items-center justify-center text-sm transition-all text-[#E0A96D]" title="سلة طلبات الريست">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    <span id="cart-floating-badge" class="hidden absolute -top-1.5 -right-1.5 w-5 h-5 bg-[#C69255] text-[#1A110D] font-black text-[10px] rounded-full flex items-center justify-center shadow-lg animate-pulse">
+                        <span id="cart-count">0</span>
+                    </span>
+                </button>
+
+                <!-- User Bar Pill (Customer ID) -->
+                <div id="user-header-pill"></div>
+
+                <!-- Fast Book Button -->
+                <button onclick="openBookingModal(1)" class="btn-coffee-primary px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2">
+                    <i class="fa-regular fa-calendar-check"></i>
+                    <span class="hidden sm:inline">احجز الآن</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="relative z-10">
+
+        <!-- ========================================================================= -->
+        <!-- HERO SECTION - SIMPLE, CLASSY, UNCOMPLICATED INTRO -->
+        <!-- ========================================================================= -->
+        <section class="pt-10 pb-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                <!-- Hero Text -->
+                <div class="lg:col-span-7 space-y-5 text-right">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#35231C] border border-[#C69255]/40 text-xs text-[#EFE6DC]">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span>ديمو تجريبي: <strong class="text-[#FAF6F0]">بشمهندس ياسين</strong> وفرقة <a href="https://7pstudio.tech" target="_blank" rel="noopener noreferrer" class="text-[#E0A96D] hover:underline font-black inline-flex items-center gap-1">7pstudio <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i></a></span>
+                        </div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#2C1D17] border border-[#C69255]/25 text-xs text-[#E0A96D]">
+                            <i class="fa-solid fa-mug-hot text-xs text-[#C69255]"></i>
+                            <span>مكانك الهادي.. العب براحتك واشرب قهوتك بمزاج</span>
+                        </div>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-[#FAF6F0] leading-tight">
+                        متعة البلايستيشن في <br>
+                        <span class="text-[#E0A96D]">مكان راقٍ، هادئ، وبسيط</span>
+                    </h1>
+
+                    <!-- Clear, Uncomplicated Intro Text -->
+                    <p class="text-sm sm:text-base text-[#EFE6DC] leading-relaxed max-w-2xl">
+                        في <strong class="text-[#E0A96D]">XO PS Lounge</strong> جمعنالك بين متعة الألعاب وراحة القعدة الحلوة. وفرنالك <strong class="text-[#FAF6F0]">15 غرفة مستقلة تماماً ومعزولة صوتياً</strong> تختار جوك المفضل (قعدة عربي مريحة، أجواء كروية، أو سيت أب جيمينج هادي). ومعاك قسم <strong class="text-[#E0A96D]">الريست</strong> يقدملك قهوتك ومشروبك وأنت في مكانك.. بساطة، راحة، وأسعار واضحة بدون أي تعقيد.
+                    </p>
+
+                    <!-- Simple Pricing Box -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
+                        <div class="glass-panel p-3.5 rounded-2xl border border-[#3D5A80]/35">
+                            <div class="flex items-center justify-between text-xs text-[#C5B5A5] mb-1">
+                                <span>بلايستيشن 5</span>
+                                <span class="px-1.5 py-0.5 rounded bg-[#2D394A] text-[#B8D3F5] text-[10px] font-mono">8 رومات</span>
+                            </div>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-2xl font-black text-[#B8D3F5]">100</span>
+                                <span class="text-xs text-[#C5B5A5]">ج.م / ساعة للفرد</span>
+                            </div>
+                        </div>
+
+                        <div class="glass-panel p-3.5 rounded-2xl border border-[#C69255]/30">
+                            <div class="flex items-center justify-between text-xs text-[#C5B5A5] mb-1">
+                                <span>بلايستيشن 4</span>
+                                <span class="px-1.5 py-0.5 rounded bg-[#3D2920] text-[#E0A96D] text-[10px] font-mono">7 رومات</span>
+                            </div>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-2xl font-black text-[#E0A96D]">70</span>
+                                <span class="text-xs text-[#C5B5A5]">ج.م / ساعة للفرد</span>
+                            </div>
+                        </div>
+
+                        <div class="glass-panel p-3.5 rounded-2xl border border-[#C69255]/30 col-span-2 sm:col-span-1">
+                            <div class="flex items-center justify-between text-xs text-[#C5B5A5] mb-1">
+                                <span>كافيه الريست</span>
+                                <span class="text-[#E0A96D] text-xs"><i class="fa-solid fa-mug-hot"></i></span>
+                            </div>
+                            <div class="text-xs font-bold text-[#EFE6DC] mt-1">
+                                اطلب قهوتك ومشروبك وأنت في الروم
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Call To Action Buttons (No WhatsApp) -->
+                    <div class="flex flex-wrap items-center gap-3 pt-2">
+                        <button onclick="openBookingModal(1)" class="btn-coffee-primary px-6 py-3 rounded-2xl text-sm font-bold flex items-center gap-2">
+                            <i class="fa-regular fa-calendar-check text-base"></i>
+                            <span>احجز غرفتك الآن</span>
+                        </button>
+
+                        <button onclick="openVouchersModal()" class="btn-coffee-outline px-5 py-3 rounded-2xl text-sm font-bold flex items-center gap-2">
+                            <i class="fa-solid fa-ticket-simple text-[#C69255]"></i>
+                            <span>أكواد الخصم والفاوتشرز</span>
+                        </button>
+
+                        <a href="#the-rest-section" class="px-5 py-3 rounded-2xl bg-[#30211A] border border-[#C69255]/25 hover:border-[#E0A96D] text-[#EFE6DC] hover:text-[#E0A96D] text-sm font-bold flex items-center gap-2 transition-all">
+                            <i class="fa-solid fa-mug-hot text-[#C69255]"></i>
+                            <span>منيو كافيه الريست</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hero Visual Showcase -->
+                <div class="lg:col-span-5">
+                    <div class="glass-panel-glow rounded-3xl p-5 relative overflow-hidden group">
+                        <div class="relative h-64 sm:h-72 rounded-2xl overflow-hidden mb-4 border border-[#C69255]/25">
+                            <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=1000&q=80" alt="XO PS Room Experience" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#241813] via-[#241813]/30 to-transparent"></div>
+                            
+                            <div class="absolute top-3 right-3 flex items-center gap-1.5">
+                                <span class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-emerald-700/90 text-emerald-100 border border-emerald-500/30 backdrop-blur-md">
+                                    <i class="fa-solid fa-circle-check text-[9px] mr-1"></i> تصوير واقعي 100%
+                                </span>
+                            </div>
+
+                            <div class="absolute bottom-4 right-4 left-4 flex items-center justify-between">
+                                <div>
+                                    <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-[#2C1D17]/90 text-[#E0A96D] border border-[#C69255]/30">
+                                        بلايستيشن 5 • قعدة عربي وريلاكس
+                                    </span>
+                                    <h4 class="text-[#FAF6F0] text-base font-bold mt-1.5">أجواء بلايستيشن مصرية حقيقية</h4>
+                                </div>
+                                <span class="w-10 h-10 rounded-full bg-[#C69255]/20 text-[#E0A96D] border border-[#C69255]/40 flex items-center justify-center text-sm">
+                                    <i class="fa-brands fa-playstation"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Mini Visual Previews -->
+                        <div class="grid grid-cols-2 gap-2 mb-3">
+                            <div class="relative h-20 rounded-xl overflow-hidden border border-[#C69255]/20 group/sub">
+                                <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=400&q=80" alt="القعدة العربي" class="w-full h-full object-cover group-hover/sub:scale-110 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#241813] via-transparent to-transparent"></div>
+                                <span class="absolute bottom-1.5 right-2 text-[10px] font-bold text-[#EFE6DC]">جلسات قعدة عربي</span>
+                            </div>
+                            <div class="relative h-20 rounded-xl overflow-hidden border border-[#C69255]/20 group/sub">
+                                <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=400&q=80" alt="تحديات اللعب" class="w-full h-full object-cover group-hover/sub:scale-110 transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#241813] via-transparent to-transparent"></div>
+                                <span class="absolute bottom-1.5 right-2 text-[10px] font-bold text-[#EFE6DC]">ماتشات وتحديات الصحاب</span>
+                            </div>
+                        </div>
+
+                        <!-- Mini stats banner -->
+                        <div class="grid grid-cols-3 gap-2 text-center">
+                            <div class="p-2.5 rounded-xl bg-[#2C1D17] border border-[#C69255]/20">
+                                <span class="text-xs text-[#C5B5A5] block mb-0.5">الغرف المستقلة</span>
+                                <span class="text-sm font-black text-[#E0A96D]">15 غرفة</span>
+                            </div>
+                            <div class="p-2.5 rounded-xl bg-[#2C1D17] border border-[#C69255]/20">
+                                <span class="text-xs text-[#C5B5A5] block mb-0.5">الألعاب المثبتة</span>
+                                <span class="text-sm font-black text-[#E0A96D]">16+ لعبة</span>
+                            </div>
+                            <div class="p-2.5 rounded-xl bg-[#2C1D17] border border-[#C69255]/20">
+                                <span class="text-xs text-[#C5B5A5] block mb-0.5">الخصوصية</span>
+                                <span class="text-sm font-black text-emerald-400">100% هادئ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Member ID & Vouchers Bar -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
+            <div class="glass-panel rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row items-center justify-between gap-4 border border-[#C69255]/25">
+                <div class="flex items-center gap-3.5">
+                    <div class="w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-[#C69255]/40 shadow-md">
+                        <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=200&q=80" alt="عضوية XO PS" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h4 class="text-sm sm:text-base font-bold text-[#FAF6F0]">حسابك الخاص وكود الـ ID وبطاقة الخصومات</h4>
+                        <p class="text-xs text-[#C5B5A5]">كل عميل مسجل له كود ID خاص تنزل عليه الفاوتشرز وأكواد الخصم وتاريخ حجوزاته.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2.5 w-full md:w-auto">
+                    <button onclick="openVouchersModal()" class="flex-1 md:flex-none px-4 py-2 rounded-xl btn-coffee-outline text-xs font-bold flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-ticket-simple text-[#C69255]"></i>
+                        <span>الفاوتشرز المتاحة</span>
+                    </button>
+                    <button onclick="openDashboardModal()" class="flex-1 md:flex-none px-4 py-2 rounded-xl btn-coffee-primary text-xs font-bold flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-address-card"></i>
+                        <span>بطاقة الـ ID الخاصة بي</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 15 Rooms Showcase Section -->
+        <section id="rooms-section" class="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+                <div>
+                    <span class="text-xs font-bold text-[#E0A96D] uppercase tracking-widest block mb-1">
+                        15 غرفة مجهزة بأحدث الشاشات والدراعات الأصلية
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-[#FAF6F0]">
+                        اختر غرفتك المفضلة في <span class="text-[#E0A96D]">XO PS</span>
+                    </h2>
+                </div>
+
+                <!-- Room Categories Filters -->
+                <div class="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-[#2C1D17] border border-[#C69255]/25">
+                    <button onclick="filterRooms('all')" data-filter="all" class="room-filter-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-[#C69255] text-[#1A110D] shadow-lg transition-all">
+                        الكل (15 روم)
+                    </button>
+                    <button onclick="filterRooms('ps5')" data-filter="ps5" class="room-filter-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-[#EFE6DC] bg-[#33221B] border border-[#C69255]/20 hover:border-[#C69255]/40 transition-all">
+                        بلايستيشن 5 (8 رومات - 100 ج/س)
+                    </button>
+                    <button onclick="filterRooms('ps4')" data-filter="ps4" class="room-filter-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-[#EFE6DC] bg-[#33221B] border border-[#C69255]/20 hover:border-[#C69255]/40 transition-all">
+                        بلايستيشن 4 (7 رومات - 70 ج/س)
+                    </button>
+                    <button onclick="filterRooms('arabic')" data-filter="arabic" class="room-filter-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-[#EFE6DC] bg-[#33221B] border border-[#C69255]/20 hover:border-[#C69255]/40 transition-all">
+                        <i class="fa-solid fa-couch ml-1 text-[#E0A96D]"></i> قعدة عربي
+                    </button>
+                    <button onclick="filterRooms('gaming')" data-filter="gaming" class="room-filter-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-[#EFE6DC] bg-[#33221B] border border-[#C69255]/20 hover:border-[#C69255]/40 transition-all">
+                        <i class="fa-solid fa-gamepad ml-1 text-[#C69255]"></i> سايبر وجيمينج
+                    </button>
+                    <button onclick="filterRooms('football')" data-filter="football" class="room-filter-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-[#EFE6DC] bg-[#33221B] border border-[#C69255]/20 hover:border-[#C69255]/40 transition-all">
+                        <i class="fa-solid fa-futbol ml-1 text-emerald-400"></i> ستاديوم كورة
+                    </button>
+                    <button onclick="filterRooms('relax')" data-filter="relax" class="room-filter-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-[#EFE6DC] bg-[#33221B] border border-[#C69255]/20 hover:border-[#C69255]/40 transition-all">
+                        <i class="fa-solid fa-cloud-moon ml-1 text-[#51759E]"></i> ريلاكس وهدوء
+                    </button>
+                </div>
+            </div>
+
+            <!-- Rooms Grid -->
+            <div id="rooms-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- REAL LOUNGE PHOTO GALLERY SECTION (معرض صور حقيقي للاونج المصري) -->
+        <!-- ========================================================================= -->
+        <section id="gallery-section" class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#35231C] text-[#E0A96D] border border-[#C69255]/30 text-xs font-bold mb-2">
+                        <i class="fa-solid fa-camera-retro"></i>
+                        <span>تصوير واقعي 100% من داخل اللاونج</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-black text-[#FAF6F0]">
+                        أجواء <span class="text-[#E0A96D]">XO PS Lounge</span> الحقيقية
+                    </h2>
+                    <p class="text-xs sm:text-sm text-[#C5B5A5] mt-1">
+                        شوف المكان على الطبيعة قبل ما تحجز: القعدة العربي، رومات الـ VIP، بار القهوة، ولمة الصحاب في التحديات.
+                    </p>
+                </div>
+
+                <!-- Gallery Categories Filter -->
+                <div class="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-[#2C1D17] border border-[#C69255]/25">
+                    <button onclick="filterGallery('all')" data-gallery-filter="all" class="gallery-filter-tab px-3.5 py-1.5 rounded-xl text-xs font-bold bg-[#C69255] text-[#1A110D] shadow-md transition-all">
+                        الكل (6)
+                    </button>
+                    <button onclick="filterGallery('challenges')" data-gallery-filter="challenges" class="gallery-filter-tab px-3.5 py-1.5 rounded-xl text-xs font-semibold text-[#EFE6DC] bg-[#33221B] border border-[#C69255]/20 hover:border-[#C69255]/40 transition-all">
+                        <i class="fa-solid fa-gamepad ml-1 text-[#C69255]"></i> تحديات الصحاب
+                    </button>
+                    <button onclick="filterGallery('arabic')" data-gallery-filter="arabic" class="gallery-filter-tab px-3.5 py-1.5 rounded-xl text-xs font-semibold text-[#EFE6DC] bg-[#33221B] border border-[#C69255]/20 hover:border-[#C69255]/40 transition-all">
+                        <i class="fa-solid fa-couch ml-1 text-[#E0A96D]"></i> قعدة عربي
+                    </button>
+                    <button onclick="filterGallery('vip')" data-gallery-filter="vip" class="gallery-filter-tab px-3.5 py-1.5 rounded-xl text-xs font-semibold text-[#EFE6DC] bg-[#33221B] border border-[#C69255]/20 hover:border-[#C69255]/40 transition-all">
+                        <i class="fa-solid fa-crown ml-1 text-yellow-400"></i> رومات VIP
+                    </button>
+                    <button onclick="filterGallery('gaming')" data-gallery-filter="gaming" class="gallery-filter-tab px-3.5 py-1.5 rounded-xl text-xs font-semibold text-[#EFE6DC] bg-[#33221B] border border-[#C69255]/20 hover:border-[#C69255]/40 transition-all">
+                        <i class="fa-brands fa-playstation ml-1 text-[#51759E]"></i> أجهزة PS5
+                    </button>
+                    <button onclick="filterGallery('rest')" data-gallery-filter="rest" class="gallery-filter-tab px-3.5 py-1.5 rounded-xl text-xs font-semibold text-[#EFE6DC] bg-[#33221B] border border-[#C69255]/20 hover:border-[#C69255]/40 transition-all">
+                        <i class="fa-solid fa-mug-hot ml-1 text-[#C69255]"></i> بار الريست
+                    </button>
+                </div>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Rendered dynamically via JS -->
+            </div>
+        </section>
+
+        <!-- "THE REST" (الريست) Café Section -->
+        <section id="the-rest-section" class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto my-6">
+            <div class="glass-panel-glow rounded-3xl p-6 sm:p-10 border border-[#C69255]/30 relative overflow-hidden">
+                <div class="absolute -top-32 -left-32 w-80 h-80 bg-[#C69255]/12 rounded-full blur-[100px] pointer-events-none"></div>
+
+                <!-- Section Header -->
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8 pb-6 border-b border-[#C69255]/20">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#35231C] text-[#E0A96D] border border-[#C69255]/30 text-xs font-bold mb-2">
+                            <i class="fa-solid fa-mug-hot"></i>
+                            <span>قسم الضيافة والمشروبات • خدمة مباشرة داخل الروم</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-black text-[#FAF6F0]">
+                            كافيه <span class="text-[#E0A96D]">الريست</span> (The Rest)
+                        </h2>
+                        <p class="text-xs sm:text-sm text-[#C5B5A5] mt-1 max-w-2xl leading-relaxed">
+                            وأنت بتلعب ومحتاج تاخد ريست؟ اختار غرفتك واطلب مشروبك المفضل (مياه معدنية، مياه غازية، مشروبات طاقة، قهوة وإسبريسو) وهيجيلك فوراً لحد عندك كاش أو فيزا!
+                        </p>
+                    </div>
+
+                    <!-- Room Selector & Cart Button -->
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 bg-[#2C1D17] p-3.5 rounded-2xl border border-[#C69255]/25">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-door-open text-[#E0A96D] text-lg"></i>
+                            <div>
+                                <span class="text-[10px] text-[#C5B5A5] block font-semibold">توصيل الطلب إلى:</span>
+                                <select id="rest-room-select" class="bg-[#35231C] text-[#FAF6F0] font-bold text-xs rounded-lg px-2.5 py-1.5 border border-[#C69255]/30 focus:border-[#E0A96D] focus:outline-none">
+                                    <!-- Populated via JS -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <button onclick="openCartModal()" class="btn-coffee-primary px-4 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-basket-shopping text-sm"></i>
+                            <span>عرض السلة والدفع</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Search and Categories Filter -->
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-6">
+                    <!-- Categories -->
+                    <div id="rest-categories-container" class="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0 scrollbar-none">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <!-- Search Input -->
+                    <div class="relative w-full sm:w-72">
+                        <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-1/2 -translate-y-1/2 text-[#C5B5A5] text-xs"></i>
+                        <input type="text" id="search-rest-input" placeholder="ابحث عن مشروبك المفضل..." class="w-full pr-9 pl-4 py-2 rounded-xl bg-[#2C1D17] border border-[#C69255]/25 text-xs text-[#FAF6F0] placeholder-[#C5B5A5] focus:border-[#E0A96D] focus:outline-none">
+                    </div>
+                </div>
+
+                <!-- Drinks & Items Grid -->
+                <div id="rest-menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Installed Games Library (16+ Top Games) -->
+        <section id="games-section" class="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+                <div>
+                    <span class="text-xs font-bold text-[#E0A96D] uppercase tracking-widest block mb-1">
+                        أكثر من 15 لعبة محملة وجاهزة على كل جهاز بلايستيشن
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-[#FAF6F0]">
+                        مكتبة الألعاب المثبتة في <span class="text-[#E0A96D]">XO PS</span>
+                    </h2>
+                </div>
+
+                <div class="text-xs text-[#C5B5A5] flex items-center gap-2">
+                    <i class="fa-solid fa-check text-[#E0A96D]"></i>
+                    <span>أحدث التحديثات والانتقالات للعبة FC 24 وجميع الألعاب</span>
+                </div>
+            </div>
+
+            <!-- Games Grid -->
+            <div id="games-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
+                <!-- Populated by JS -->
+            </div>
+        </section>
+
+        <!-- Why XO PS Lounge? (Place Features & Atmosphere) -->
+        <section id="about-section" class="py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <span class="text-xs font-bold text-[#E0A96D] uppercase tracking-widest">بساطة وراحة</span>
+                <h2 class="text-2xl sm:text-3xl font-black text-[#FAF6F0] mt-1">
+                    ليه هتحب قعدة XO PS؟
+                </h2>
+                <p class="text-xs sm:text-sm text-[#C5B5A5] mt-2">
+                    صممنا المكان بدون أي بهرجة مزعجة أو تعقيد.. مكان هادئ، شاشات نقية، قهوة مظبوطة، وخدمة سريعة.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="glass-card p-5 rounded-2xl border border-[#C69255]/20 text-center flex flex-col items-center group">
+                    <div class="w-full h-36 rounded-xl overflow-hidden mb-3.5 border border-[#C69255]/25 relative">
+                        <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=400&q=80" alt="عزل صوتي تام" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#241813] via-transparent to-transparent"></div>
+                        <span class="absolute top-2 right-2 w-8 h-8 rounded-lg bg-[#2C1D17]/90 text-[#E0A96D] border border-[#C69255]/30 flex items-center justify-center text-xs backdrop-blur-md">
+                            <i class="fa-solid fa-volume-xmark"></i>
+                        </span>
+                    </div>
+                    <h4 class="text-base font-bold text-[#FAF6F0] mb-1.5">عزل صوتي تام</h4>
+                    <p class="text-xs text-[#C5B5A5] leading-relaxed">
+                        كل غرفة مستقلة تماماً ومبطنة بعوازل صوت احترافية عشان تلعب وتصيح براحتك بدون دوشة.
+                    </p>
+                </div>
+
+                <div class="glass-card p-5 rounded-2xl border border-[#C69255]/20 text-center flex flex-col items-center group">
+                    <div class="w-full h-36 rounded-xl overflow-hidden mb-3.5 border border-[#C69255]/25 relative">
+                        <img src="https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=400&q=80" alt="شاشات 4K مريحة للعين" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#241813] via-transparent to-transparent"></div>
+                        <span class="absolute top-2 right-2 w-8 h-8 rounded-lg bg-[#2C1D17]/90 text-[#E0A96D] border border-[#C69255]/30 flex items-center justify-center text-xs backdrop-blur-md">
+                            <i class="fa-solid fa-tv"></i>
+                        </span>
+                    </div>
+                    <h4 class="text-base font-bold text-[#FAF6F0] mb-1.5">شاشات 4K مريحة للعين</h4>
+                    <p class="text-xs text-[#C5B5A5] leading-relaxed">
+                        شاشات سوني وQLED عملاقة بمعدل 120Hz ودراعات أصلية ممتازة لكل الأجهزة بدون أي لاج.
+                    </p>
+                </div>
+
+                <div class="glass-card p-5 rounded-2xl border border-[#C69255]/20 text-center flex flex-col items-center group">
+                    <div class="w-full h-36 rounded-xl overflow-hidden mb-3.5 border border-[#C69255]/25 relative">
+                        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=400&q=80" alt="قهوة ومشروبات الريست" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#241813] via-transparent to-transparent"></div>
+                        <span class="absolute top-2 right-2 w-8 h-8 rounded-lg bg-[#2C1D17]/90 text-[#E0A96D] border border-[#C69255]/30 flex items-center justify-center text-xs backdrop-blur-md">
+                            <i class="fa-solid fa-mug-hot"></i>
+                        </span>
+                    </div>
+                    <h4 class="text-base font-bold text-[#FAF6F0] mb-1.5">قهوة ومشروبات الريست</h4>
+                    <p class="text-xs text-[#C5B5A5] leading-relaxed">
+                        باريستا متخصص يقدم قهوتك ومشروبك المثلج لغرفتك مباشرة بضغطة زر بدون ما تقطع الجيم.
+                    </p>
+                </div>
+
+                <div class="glass-card p-5 rounded-2xl border border-[#C69255]/20 text-center flex flex-col items-center group">
+                    <div class="w-full h-36 rounded-xl overflow-hidden mb-3.5 border border-[#C69255]/25 relative">
+                        <img src="https://images.unsplash.com/photo-1556742111-a301076d9d18?auto=format&fit=crop&w=400&q=80" alt="دفع كاش أو فيزا ومحافظ" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#241813] via-transparent to-transparent"></div>
+                        <span class="absolute top-2 right-2 w-8 h-8 rounded-lg bg-[#2C1D17]/90 text-[#E0A96D] border border-[#C69255]/30 flex items-center justify-center text-xs backdrop-blur-md">
+                            <i class="fa-solid fa-credit-card"></i>
+                        </span>
+                    </div>
+                    <h4 class="text-base font-bold text-[#FAF6F0] mb-1.5">دفع كاش أو فيزا ومحافظ</h4>
+                    <p class="text-xs text-[#C5B5A5] leading-relaxed">
+                        سهولة تامة في السداد: كاش في الاستقبال، أو فيزا، أو فودافون كاش وإنستاباي مع إيصال رقمي فوري.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-[#C69255]/20 bg-[#1E140F] py-10 px-4 sm:px-6 lg:px-8 text-xs text-[#C5B5A5]">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-[#35231C] border border-[#C69255]/30 flex items-center justify-center font-bold text-[#E0A96D]">
+                    XO
+                </div>
+                <div>
+                    <span class="font-bold text-[#FAF6F0] block">XO PS Lounge - اكس او بي اس لاونج</span>
+                    <span class="text-[11px] text-[#C5B5A5]">15 غرفة بلايستيشن • 8 PS5 و 7 PS4 • كافيه الريست للضيافة</span>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-6">
+                <span><i class="fa-solid fa-clock text-[#C69255] ml-1"></i> يومياً 12 ظهراً - 4 فجراً</span>
+                <span><i class="fa-solid fa-location-dot text-[#C69255] ml-1"></i> شارع النصر، أمام سيتي سنتر</span>
+                <span><i class="fa-solid fa-phone text-[#C69255] ml-1"></i> 01012345678</span>
+            </div>
+
+            <div class="text-center md:text-left text-[11px] text-[#C5B5A5] space-y-1">
+                <p>جميع الحقوق محفوظة © لاونج اكس او بي اس (XO PS).</p>
+                <p>نسخة ديمو تجريبية من تطوير <strong class="text-[#FAF6F0]">بشمهندس ياسين</strong> وفرقة <a href="https://7pstudio.tech" target="_blank" rel="noopener noreferrer" class="text-[#E0A96D] hover:underline font-bold">7pstudio</a> (<a href="https://7pstudio.tech" target="_blank" rel="noopener noreferrer" class="text-[#C69255] hover:underline font-mono">7pstudio.tech</a>)</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========================================================================= -->
+    <!-- MODALS & DIALOGS -->
+    <!-- ========================================================================= -->
+
+    <!-- 1. VOUCHERS MODAL (نافذة الفاوتشرز وأكواد الخصم) -->
+    <div id="vouchers-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay overflow-y-auto">
+        <div class="glass-panel-glow w-full max-w-lg rounded-3xl p-6 sm:p-7 border border-[#C69255]/40 relative shadow-2xl my-8">
+            <div class="flex items-center justify-between pb-4 mb-4 border-b border-[#C69255]/20">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-[#35231C] border border-[#C69255]/40 flex items-center justify-center text-[#E0A96D]">
+                        <i class="fa-solid fa-ticket-simple text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-black text-[#FAF6F0]">الفاوتشرز وأكواد الخصم الخاصة بك</h3>
+                        <span class="text-[11px] text-[#C5B5A5]">أكواد الخصم المتاحة لحسابك وتاريخ انتهائها</span>
+                    </div>
+                </div>
+
+                <button onclick="closeVouchersModal()" class="w-8 h-8 rounded-lg bg-[#35231C] text-[#C5B5A5] hover:text-[#FAF6F0] flex items-center justify-center transition-all">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Vouchers List -->
+            <div id="vouchers-modal-list" class="space-y-3 max-h-80 overflow-y-auto pr-1">
+                <!-- Rendered via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. BOOKING WIZARD MODAL (خطوات الحجز مع الفاوتشر) -->
+    <div id="booking-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay overflow-y-auto">
+        <div class="glass-panel-glow w-full max-w-xl rounded-3xl p-6 sm:p-8 border border-[#C69255]/40 relative shadow-2xl my-8">
+            <div class="flex items-center justify-between pb-4 mb-4 border-b border-[#C69255]/20">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-[#35231C] border border-[#C69255]/40 flex items-center justify-center text-[#E0A96D]">
+                        <i class="fa-regular fa-calendar-check text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base sm:text-lg font-black text-[#FAF6F0]">حجز غرفة في XO PS</h3>
+                        <span class="text-[11px] text-[#C5B5A5]">خطوات الحجز وتأكيد الموعد</span>
+                    </div>
+                </div>
+
+                <button onclick="closeBookingModal()" class="w-8 h-8 rounded-lg bg-[#35231C] text-[#C5B5A5] hover:text-[#FAF6F0] flex items-center justify-center transition-all">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div id="booking-stepper-dots" class="flex items-center justify-between mb-6 pb-2 border-b border-[#C69255]/15">
+                <!-- Stepper Dots -->
+            </div>
+
+            <div id="booking-step-content">
+                <!-- Step Content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. CART MODAL FOR "THE REST" -->
+    <div id="cart-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay overflow-y-auto">
+        <div class="glass-panel-glow w-full max-w-md rounded-3xl p-6 border border-[#C69255]/40 relative shadow-2xl my-8">
+            <div class="flex items-center justify-between pb-4 mb-4 border-b border-[#C69255]/20">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-[#35231C] border border-[#C69255]/40 flex items-center justify-center text-[#E0A96D]">
+                        <i class="fa-solid fa-mug-hot text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-black text-[#FAF6F0]">سلة مشروبات الريست</h3>
+                        <span class="text-[11px] text-[#C5B5A5]">طلب مباشر إلى غرفتك</span>
+                    </div>
+                </div>
+
+                <button onclick="closeCartModal()" class="w-8 h-8 rounded-lg bg-[#35231C] text-[#C5B5A5] hover:text-[#FAF6F0] flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div id="cart-items-list" class="space-y-2.5 max-h-60 overflow-y-auto mb-4 pr-1">
+                <!-- Items list -->
+            </div>
+
+            <div class="space-y-3 pt-3 border-t border-[#C69255]/20 text-xs">
+                <div>
+                    <label class="block text-[#EFE6DC] font-bold mb-1">رقم الغرفة المستلمة للطلب:</label>
+                    <select id="cart-room-select" class="w-full px-3 py-2 rounded-xl bg-[#2C1D17] border border-[#C69255]/30 text-[#FAF6F0] font-bold text-xs focus:border-[#E0A96D] focus:outline-none">
+                        <option value="1">روم #1 (القعدة العربية VIP - PS5)</option>
+                        <option value="2">روم #2 (سايبر نيون RGB - PS5)</option>
+                        <option value="3">روم #3 (ستاديوم كورة - PS5)</option>
+                        <option value="4">روم #4 (سكاي ريلاكس - PS5)</option>
+                        <option value="5">روم #5 (نيون فايتر - PS5)</option>
+                        <option value="6">روم #6 (الديوان الأندلسي - PS5)</option>
+                        <option value="7">روم #7 (برو إيسبورتس - PS5)</option>
+                        <option value="8">روم #8 (ذا بنكر VIP - PS5)</option>
+                        <option value="9">روم #9 (القعدة العربية الأصيلة - PS4)</option>
+                        <option value="10">روم #10 (سايبر ماتريكس - PS4)</option>
+                        <option value="11">روم #11 (ستاديوم كلاسيك - PS4)</option>
+                        <option value="12">روم #12 (ريلاكس مود - PS4)</option>
+                        <option value="13">روم #13 (ريترو كلاسيك - PS4)</option>
+                        <option value="14">روم #14 (المجلس العربي المودرن - PS4)</option>
+                        <option value="15">روم #15 (باتل أرينا - PS4)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-[#EFE6DC] font-bold mb-1">طريقة دفع الحساب:</label>
+                    <select id="cart-payment-method" class="w-full px-3 py-2 rounded-xl bg-[#2C1D17] border border-[#C69255]/30 text-[#FAF6F0] text-xs focus:border-[#E0A96D] focus:outline-none">
+                        <option value="كاش عند الاستلام بالروم">كاش عند استلام المشروب بالروم</option>
+                        <option value="فيزا / بطاقة بنكية">فيزا / ماستركارد</option>
+                        <option value="إضافة على حساب الروم">إضافة على حساب حجز الغرفة</option>
+                    </select>
+                </div>
+
+                <div class="flex items-center justify-between text-sm font-bold pt-2">
+                    <span class="text-[#EFE6DC]">إجمالي الطلب:</span>
+                    <span id="cart-total-price" class="text-[#E0A96D] text-base">0 ج.م</span>
+                </div>
+            </div>
+
+            <div class="pt-4 mt-2">
+                <button onclick="checkoutTheRestOrder()" class="btn-coffee-primary w-full py-3 rounded-xl font-black text-xs flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>إرسال الطلب فوراً إلى الغرفة</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. ORDER SUCCESS MODAL -->
+    <div id="order-success-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay">
+        <div class="glass-panel-glow w-full max-w-sm rounded-3xl p-6 border border-[#C69255]/40 text-center shadow-2xl">
+            <div class="relative h-32 rounded-2xl overflow-hidden border border-[#C69255]/30 mb-4">
+                <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=400&q=80" alt="كافيه الريست" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#241813] via-[#241813]/40 to-transparent"></div>
+                <div class="absolute bottom-2 right-3 text-right">
+                    <span class="text-[10px] font-bold text-[#E0A96D] bg-[#2C1D17]/90 px-2.5 py-1 rounded-lg border border-[#C69255]/30">كافيه الريست • خدمة بالروم</span>
+                </div>
+            </div>
+            <h3 class="text-lg font-black text-[#FAF6F0] mb-1">تم استلام طلب الريست بنجاح!</h3>
+            <p class="text-xs text-[#C5B5A5] mb-4">جاري تجهيز مشروبك في البار وسيصلك إلى غرفتك فوراً.</p>
+
+            <div class="bg-[#2C1D17] p-3 rounded-xl border border-[#C69255]/20 text-xs text-[#EFE6DC] mb-5 space-y-1 text-right">
+                <div class="flex justify-between">
+                    <span>كود الطلب:</span>
+                    <span id="order-success-id" class="font-mono text-[#E0A96D] font-bold"></span>
+                </div>
+                <div class="flex justify-between">
+                    <span>الغرفة:</span>
+                    <span id="order-success-room" class="font-bold text-[#FAF6F0]"></span>
+                </div>
+                <div class="flex justify-between">
+                    <span>الإجمالي:</span>
+                    <span id="order-success-total" class="font-black text-[#E0A96D]"></span>
+                </div>
+            </div>
+
+            <button onclick="closeOrderSuccessModal()" class="btn-coffee-primary w-full py-2.5 rounded-xl text-xs font-bold">
+                حسناً، استكمال اللعب
+            </button>
+        </div>
+    </div>
+
+    <!-- 5. RECEIPT MODAL (تذكرة وإيصال الحجز الرقمي) -->
+    <div id="receipt-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay overflow-y-auto">
+        <div class="glass-panel-glow w-full max-w-md rounded-3xl p-6 sm:p-7 border border-[#C69255]/40 relative shadow-2xl my-8">
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-[#C69255]/20">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <h3 class="text-base font-black text-[#FAF6F0]">تذكرة وإيصال الحجز الرقمي</h3>
+                </div>
+                <button onclick="closeReceiptModal()" class="w-7 h-7 rounded-lg bg-[#35231C] text-[#C5B5A5] hover:text-[#FAF6F0] flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div id="receipt-modal-content" class="bg-[#2C1D17] rounded-2xl p-4 border border-[#C69255]/20 text-xs space-y-3">
+                <div class="text-center pb-2 border-b border-[#C69255]/20">
+                    <h4 class="text-base font-black text-[#E0A96D]">XO PS LOUNGE</h4>
+                    <span class="text-[10px] text-[#C5B5A5]">كود الحجز: <strong id="receipt-code" class="text-[#FAF6F0] font-mono text-xs"></strong></span>
+                </div>
+
+                <!-- Booked Room Real Photo Preview -->
+                <div id="receipt-room-preview" class="relative h-28 rounded-xl overflow-hidden border border-[#C69255]/30">
+                    <img id="receipt-room-img" src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80" alt="غرفة الحجز" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#1C1410] via-transparent to-transparent"></div>
+                    <span id="receipt-room-type-badge" class="absolute bottom-2 right-2 px-2.5 py-0.5 rounded text-[10px] font-black bg-[#C69255] text-[#140E0C]">PS5</span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2 text-[11px]">
+                    <div>
+                        <span class="text-[#C5B5A5] block">اسم العميل:</span>
+                        <strong id="receipt-customer-name" class="text-[#FAF6F0]"></strong>
+                    </div>
+                    <div>
+                        <span class="text-[#C5B5A5] block">كود العميل (ID):</span>
+                        <strong id="receipt-customer-id" class="text-[#E0A96D] font-mono"></strong>
+                    </div>
+                    <div>
+                        <span class="text-[#C5B5A5] block">رقم الهاتف:</span>
+                        <span id="receipt-customer-phone" class="text-[#EFE6DC] font-mono"></span>
+                    </div>
+                    <div>
+                        <span class="text-[#C5B5A5] block">طريقة الدفع:</span>
+                        <span id="receipt-payment-method" class="text-emerald-400 font-semibold"></span>
+                    </div>
+                    <div class="col-span-2">
+                        <span class="text-[#C5B5A5] block">الغرفة المختارة:</span>
+                        <strong id="receipt-room-name" class="text-[#E0A96D]"></strong>
+                    </div>
+                    <div>
+                        <span class="text-[#C5B5A5] block">الموعد:</span>
+                        <span id="receipt-date-time" class="text-[#EFE6DC]"></span>
+                    </div>
+                    <div>
+                        <span class="text-[#C5B5A5] block">المدة واللاعبين:</span>
+                        <span id="receipt-duration-players" class="text-[#EFE6DC]"></span>
+                    </div>
+                </div>
+
+                <!-- QR Code Box -->
+                <div class="flex items-center justify-between pt-2 border-t border-[#C69255]/20">
+                    <div>
+                        <span class="text-[#C5B5A5] text-[10px] block">إجمالي الحساب:</span>
+                        <span id="receipt-total-price" class="text-lg font-black text-[#E0A96D]"></span>
+                    </div>
+                    <div id="receipt-qr-code" class="w-20 h-20">
+                        <!-- QR SVG -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-4 flex gap-2">
+                <button onclick="window.print()" class="btn-coffee-primary flex-1 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-print"></i>
+                    <span>طباعة التذكرة</span>
+                </button>
+                <button onclick="closeReceiptModal()" class="btn-coffee-outline px-4 py-2.5 rounded-xl text-xs font-bold">
+                    إغلاق
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. CUSTOMER DASHBOARD MODAL -->
+    <div id="dashboard-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay overflow-y-auto">
+        <div class="glass-panel-glow w-full max-w-2xl rounded-3xl p-6 sm:p-8 border border-[#C69255]/40 relative shadow-2xl my-8">
+            <div class="flex items-center justify-between pb-4 mb-4 border-b border-[#C69255]/20">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-[#35231C] flex items-center justify-center text-[#E0A96D] font-black">
+                        <i class="fa-solid fa-user text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base sm:text-lg font-black text-[#FAF6F0]">لوحة تحكم العميل والـ ID الرقمي</h3>
+                        <span class="text-[11px] text-[#C5B5A5]">بياناتك، بطاقتك، وحجوزاتك السابقة</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <button onclick="logoutUser()" class="px-3 py-1 rounded-lg bg-rose-950/60 text-rose-300 hover:bg-rose-900 border border-rose-500/30 text-xs font-semibold" title="تسجيل الخروج">
+                        <i class="fa-solid fa-arrow-right-from-bracket ml-1"></i> خروج
+                    </button>
+                    <button onclick="closeDashboardModal()" class="w-8 h-8 rounded-lg bg-[#35231C] text-[#C5B5A5] hover:text-[#FAF6F0] flex items-center justify-center">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Digital Member Card -->
+            <div id="dashboard-member-card" class="mb-6">
+                <!-- Rendered by JS -->
+            </div>
+
+            <!-- ICON GRID -->
+            <div class="mb-6">
+                <span class="text-xs font-bold text-[#EFE6DC] block mb-3 flex items-center gap-1.5">
+                    <i class="fa-solid fa-table-cells-large text-[#C69255]"></i>
+                    <span>الخدمات السريعة:</span>
+                </span>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div onclick="dashboardAction('book')" class="dashboard-icon-card p-3.5 rounded-2xl flex flex-col items-center text-center">
+                        <div class="icon-wrapper w-11 h-11 rounded-2xl bg-[#35231C] text-[#E0A96D] border border-[#C69255]/30 flex items-center justify-center text-lg mb-2">
+                            <i class="fa-brands fa-playstation"></i>
+                        </div>
+                        <span class="text-xs font-bold text-[#FAF6F0] mb-0.5">حجز روم جديدة</span>
+                        <span class="text-[10px] text-[#C5B5A5]">15 غرفة مجهزة</span>
+                    </div>
+
+                    <div onclick="dashboardAction('the_rest')" class="dashboard-icon-card p-3.5 rounded-2xl flex flex-col items-center text-center">
+                        <div class="icon-wrapper w-11 h-11 rounded-2xl bg-[#35231C] text-[#C69255] border border-[#C69255]/30 flex items-center justify-center text-lg mb-2">
+                            <i class="fa-solid fa-mug-hot"></i>
+                        </div>
+                        <span class="text-xs font-bold text-[#FAF6F0] mb-0.5">كافيه الريست</span>
+                        <span class="text-[10px] text-[#C5B5A5]">مشروبات بالروم</span>
+                    </div>
+
+                    <div onclick="dashboardAction('vouchers')" class="dashboard-icon-card p-3.5 rounded-2xl flex flex-col items-center text-center">
+                        <div class="icon-wrapper w-11 h-11 rounded-2xl bg-[#35231C] text-[#E0A96D] border border-[#C69255]/30 flex items-center justify-center text-lg mb-2">
+                            <i class="fa-solid fa-ticket-simple"></i>
+                        </div>
+                        <span class="text-xs font-bold text-[#FAF6F0] mb-0.5">الفاوتشرز</span>
+                        <span class="text-[10px] text-[#C5B5A5]">أكواد الخصم</span>
+                    </div>
+
+                    <div onclick="dashboardAction('games')" class="dashboard-icon-card p-3.5 rounded-2xl flex flex-col items-center text-center">
+                        <div class="icon-wrapper w-11 h-11 rounded-2xl bg-[#35231C] text-[#51759E] border border-[#C69255]/30 flex items-center justify-center text-lg mb-2">
+                            <i class="fa-solid fa-gamepad"></i>
+                        </div>
+                        <span class="text-xs font-bold text-[#FAF6F0] mb-0.5">مكتبة الألعاب</span>
+                        <span class="text-[10px] text-[#C5B5A5]">16+ لعبة مثبتة</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer History Tabs -->
+            <div class="space-y-4">
+                <div>
+                    <h4 class="text-xs font-bold text-[#E0A96D] mb-2 flex items-center gap-1.5">
+                        <i class="fa-regular fa-calendar-check"></i>
+                        <span>سجل الحجوزات الخاصة بك:</span>
+                    </h4>
+                    <div id="dashboard-bookings-list" class="space-y-2 max-h-36 overflow-y-auto pr-1">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-bold text-[#C69255] mb-2 flex items-center gap-1.5">
+                        <i class="fa-solid fa-mug-saucer"></i>
+                        <span>سجل طلبات كافيه الريست:</span>
+                    </h4>
+                    <div id="dashboard-orders-list" class="space-y-2 max-h-36 overflow-y-auto pr-1">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. AUTH MODAL (تسجيل دخول / عميل جديد) -->
+    <div id="auth-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay">
+        <div class="glass-panel-glow w-full max-w-sm rounded-3xl p-6 border border-[#C69255]/40 relative shadow-2xl">
+            <div class="relative h-28 rounded-2xl overflow-hidden border border-[#C69255]/30 mb-4">
+                <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=600&q=80" alt="عضوية لاونج XO PS" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#241813] via-[#241813]/40 to-transparent"></div>
+                <div class="absolute bottom-2 right-3 flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-lg bg-[#C69255] text-[#140E0C] font-black text-xs flex items-center justify-center">XO</span>
+                    <span class="text-xs font-bold text-[#FAF6F0]">عضوية لاونج XO PS الرقمية</span>
+                </div>
+            </div>
+
+            <div class="text-center mb-4">
+                <h3 class="text-base font-black text-[#FAF6F0]">تسجيل الدخول / كود العميل</h3>
+                <p class="text-[11px] text-[#C5B5A5]">سجل بياناتك للحصول على بطاقة عضوية رقمية وكود ID خاص بك</p>
+            </div>
+
+            <div class="space-y-3.5 mb-5">
+                <div>
+                    <label class="block text-xs font-bold text-[#EFE6DC] mb-1">اسم العميل *</label>
+                    <input type="text" id="auth-name" placeholder="مثال: ياسين محمد" class="w-full px-3.5 py-2.5 rounded-xl bg-[#2C1D17] border border-[#C69255]/30 text-[#FAF6F0] text-xs focus:border-[#E0A96D] focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-[#EFE6DC] mb-1">رقم الهاتف *</label>
+                    <input type="tel" id="auth-phone" placeholder="مثال: 01012345678" class="w-full px-3.5 py-2.5 rounded-xl bg-[#2C1D17] border border-[#C69255]/30 text-[#FAF6F0] text-xs focus:border-[#E0A96D] focus:outline-none">
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <button onclick="handleAuthSubmit()" class="btn-coffee-primary w-full py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                    <span>دخول وتوليد بطاقة العضوية</span>
+                </button>
+                <button onclick="closeAuthModal()" class="w-full py-2 rounded-xl bg-[#35231C] text-[#C5B5A5] text-xs font-semibold">
+                    إلغاء
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 8. GALLERY LIGHTBOX MODAL (معاينة الصورة بالحجم الكامل) -->
+    <div id="gallery-lightbox-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay" onclick="closeGalleryLightbox(event)">
+        <div class="glass-panel-glow w-full max-w-3xl rounded-3xl overflow-hidden border border-[#C69255]/40 relative shadow-2xl" onclick="event.stopPropagation()">
+            <div class="relative h-72 sm:h-96 w-full overflow-hidden bg-[#140E0C]">
+                <img id="lightbox-img" src="" alt="معاينة الصورة" class="w-full h-full object-cover">
+                <button onclick="closeGalleryLightbox()" class="absolute top-4 left-4 w-9 h-9 rounded-xl bg-[#140E0C]/80 text-[#FAF6F0] hover:bg-[#C69255] hover:text-[#140E0C] flex items-center justify-center transition-all z-10 shadow-lg">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+                <div class="absolute inset-0 bg-gradient-to-t from-[#241813] via-transparent to-transparent pointer-events-none"></div>
+                <div class="absolute bottom-4 right-4 left-4">
+                    <span id="lightbox-badge" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-[#C69255] text-[#140E0C] inline-block mb-1.5 shadow-md"></span>
+                    <h3 id="lightbox-title" class="text-base sm:text-lg font-black text-[#FAF6F0]"></h3>
+                </div>
+            </div>
+            <div class="p-5 text-xs text-[#C5B5A5] leading-relaxed">
+                <p id="lightbox-desc"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Scripts (Primary & Fallback) -->
+    <script src="data.js"></script>
+    <script>
+        if (typeof XO_DATA === 'undefined') {
+            document.write('<script src="assets/js/data.js"><\/script>');
+        }
+    </script>
+    <script src="app.js"></script>
+    <script>
+        if (typeof appState === 'undefined') {
+            document.write('<script src="assets/js/app.js"><\/script>');
+        }
+    </script>
+</body>
+</html>
